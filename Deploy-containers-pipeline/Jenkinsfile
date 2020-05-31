@@ -4,7 +4,11 @@ pipeline {
 
 		stage('Lint HTML') {
 			steps {
-				sh 'tidy -q -e *.html'
+				
+				sh '''
+					cd Deploy-containers-pipeline
+					tidy -q -e *.html
+				'''
 			}
 		}
 		
@@ -12,6 +16,7 @@ pipeline {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
+						cd Deploy-containers-pipeline
 						docker build -t bcsalinasc/capstone .
 					'''
 				}
@@ -22,6 +27,7 @@ pipeline {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
+						cd Deploy-containers-pipeline
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 						docker push bcsalinasc/capstone
 					'''
@@ -33,6 +39,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'awscapstone') {
 					sh '''
+						cd Deploy-containers-pipeline
 						kubectl config use-context arn:aws:eks:us-west-2:143134632908:cluster/capstonecluster
 					'''
 				}
@@ -43,6 +50,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'awscapstone') {
 					sh '''
+						cd Deploy-containers-pipeline
 						kubectl apply -f ./blue-controller.json
 					'''
 				}
@@ -53,6 +61,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'awscapstone') {
 					sh '''
+						cd Deploy-containers-pipeline
 						kubectl apply -f ./green-controller.json
 					'''
 				}
@@ -63,6 +72,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'awscapstone') {
 					sh '''
+						cd Deploy-containers-pipeline
 						kubectl apply -f ./blue-service.json
 					'''
 				}
@@ -79,6 +89,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'awscapstone') {
 					sh '''
+						cd Deploy-containers-pipeline
 						kubectl apply -f ./green-service.json
 					'''
 				}
