@@ -15,7 +15,6 @@
 
 > I created a CI/CD pipeline for a basic website that deploys to a cluster in AWS EKS which is Blue/Green Deployment.
 
-![img-1](Images-of-result-deploy/Project.png)
 
 ## Project Requirement:
 
@@ -32,7 +31,7 @@
 
 ## The files included are:
 ```sh
-* /Images-of-result-deploy : Screenshot the result of deploy.
+* /Evidences-capstone : Screenshot the result of deploy.
 * /Create-clusters-pipeline : CloudFormation Script of Cluster Pipeline file 
 * /Deploy-containers-pipeline : Deployment Script of Containers Pipeline file
 * Jenkinsfile : Jenkinsfile for Creating Pipeline
@@ -46,5 +45,5 @@
 
 ## Run the project:
 ```sh
-* Please follow to steps of screenshot in Images-of-result-deploy folder.
+* Please follow to steps of screenshot in Evidences-capstone folder.
 ```
